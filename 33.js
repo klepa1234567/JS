@@ -1,27 +1,27 @@
-const requestUserData = userId => {
-    const request = new Promise((resolve, reject) => {
-        if (userId === 'broken'){
-            setTimeout(() => {
-                reject(new Error('User not'));
-            }, 1000);
-        }else {
-            setTimeout(() => {
-                resolve({
-                    name: 'Jon',
-                    age: 17,
-                    email: `${userId}`,
-                    userId
-                });
-            }, 1000);
-        }
-    });
-    return request;
-};
-requestUserData('broken')
-    .catch(error => {
-        console.log(error);
-        throw new Error('Error');
+const asyncCalculator = num => (
+    new Promise((resolve, reject) =>{
+        setTimeout(() => {
+            console.log(`Inital value: ${num}`);
+            resolve(num);
+        },500);
     })
-    .then(data => 4)
-    .catch(err => console.log(err))
-    .finally(() => console.log('finally'));
+
+)
+    .then(value => {
+    const pr = new Promise((resolve) => {
+        setTimeout(() => {
+            const result = value * value;
+            console.log(`Squared value: ${result}`);
+            resolve(result);
+        }, 500)
+    });
+    return pr;
+})
+    .then(value => {
+        const result = value * 2;
+        console.log(`Doubled value: ${result}`);
+        return result;
+    });
+
+asyncCalculator(4)
+    .then(value => console.log(value));
