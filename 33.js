@@ -1,27 +1,18 @@
-const asyncCalculator = num => (
-    new Promise((resolve, reject) =>{
-        setTimeout(() => {
-            console.log(`Inital value: ${num}`);
-            resolve(num);
-        },500);
-    })
+const getValueWithDelay = (value, delay) => new Promise(resolve => {
+    setTimeout(() => {
+        console.log(value)
+        resolve(value);
+    }, delay);
+});
+const asynvNum1 = getValueWithDelay(56,1000);
+const asynvNum2 = getValueWithDelay(undefined,2000);
+const asynvNum3 = getValueWithDelay(10,2000);
 
-)
-    .then(value => {
-    const pr = new Promise((resolve) => {
-        setTimeout(() => {
-            const result = value * value;
-            console.log(`Squared value: ${result}`);
-            resolve(result);
-        }, 500)
-    });
-    return pr;
-})
-    .then(value => {
-        const result = value * 2;
-        console.log(`Doubled value: ${result}`);
-        return result;
-    });
-
-asyncCalculator(4)
-    .then(value => console.log(value));
+// const getSum = numbers =>
+//     numbers.reduce((acc, num) => acc + num, 0);
+const asyncSum = (...asyncNumbers) => {
+    return  Promise.allSettled(asyncNumbers)
+        .then(numbers => console.log(numbers))
+};
+asyncSum(asynvNum1,Promise.reject(new Error('err')),asynvNum3)
+    .then(result => console.log(result))
