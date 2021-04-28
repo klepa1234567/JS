@@ -1,24 +1,12 @@
-const successRequest = Promise.resolve({name: 'Tom'});
-successRequest
-    .then(data => {
-        console.log(data);
-        throw new Error('Unexpected')
+fetch('https://api.github.com')
+    .then(response => {
+        if (response.status === 200){
+            return response.json();
+        }
+        throw new Error('No data');
     })
+    .then(data => console.log(data))
     .catch(err => {
-        console.error(err.message);
-    });
-const  failedRequest = Promise.reject(new Error('Fail'));
-failedRequest
-    .then(data => {
-        console.log(data);
+        debugger;
+        console.log(err);
     })
-    .catch(err => {
-       console.log(err.message)
-        throw err;
-    })
-    .then(data => {
-        console.log(data)
-    });
-window.addEventListener('unhandledrejection', function (e) {
-    console.log(e.reason.message);
-})
