@@ -1,12 +1,12 @@
-fetch('https://api.github.com')
-    .then(response => {
-        if (response.status === 200){
-            return response.json();
-        }
-        throw new Error('No data');
+async function func() {
+    const promise = new Promise(resolve => {
+        setTimeout(() => {
+            resolve(17);
+        },1000)
     })
-    .then(data => console.log(data))
-    .catch(err => {
-        debugger;
-        console.log(err);
-    })
+    const result = await promise;
+    console.log(result);
+    return 1;
+
+}
+const result = func();
