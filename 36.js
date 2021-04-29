@@ -1,12 +1,15 @@
-async function func() {
-    const promise = new Promise(resolve => {
-        setTimeout(() => {
-            resolve(17);
-        },1000)
-    })
-    const result = await promise;
-    console.log(result);
-    return 1;
-
-}
-const result = func();
+const getUser = async userId => {
+   try {
+       const response = await fetch(`https://api.github.com`)
+       if (!response.ok){
+           return null;
+       }
+       const userData = await response.json();
+       return userData;
+   }catch (err) {
+       throw new Error('Failed to fetch user');
+   }
+};
+getUser('facebook')
+    .then(userData => console.log(userData))
+    .catch(err => alert(err.message));
